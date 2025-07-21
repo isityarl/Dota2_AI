@@ -5,4 +5,4 @@ Starting for the stuff i will learn from the project. Will try `Langchain`, `Gra
 ## Steps
 * Hard work of creating knowledge graph
 * Building of RAG i think
-* ___
+* rararar
