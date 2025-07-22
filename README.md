@@ -3,6 +3,6 @@
 Starting for the stuff i will learn from the project. Will try `Langchain`, `GraphRAG`, `Neo4j`. For dataset: OpenDota API and Liquipedia 
 
 ## Steps
-* Hard work of creating knowledge graph
+* Creating knowledge graph
 * Building of RAG i think
 * rararar
