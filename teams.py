@@ -15,13 +15,13 @@ TEAM_REGION_MAP = {
     '8291895': 'WEU',       # Tundra Esports    
 
     # Commonwealth of Independent States (CIS)
-    '7119388': 'WEU',       # Team Spirit
-    '9824702': 'WEU',       # PARIVISION
-    '9131584': 'WEU',       # BB Team
-    '9467224': 'WEU',       # Aurora Gaming
-    '36': 'WEU',            # Natus Vincere
-    '9823272': 'WEU',       # Team Yandex
-    '8724984': 'WEU',       # Virtus.pro
+    '7119388': 'CIS',       # Team Spirit
+    '9824702': 'CIS',       # PARIVISION
+    '9131584': 'CIS',       # BB Team
+    '9467224': 'CIS',       # Aurora Gaming
+    '36': 'CIS',            # Natus Vincere
+    '9823272': 'CIS',       # Team Yandex
+    '8724984': 'CIS',       # Virtus.pro
     
 
     # China (CN)
@@ -64,26 +64,19 @@ class Team:
             return    
         
         query = """
-        // Use UNWIND to iterate through the list of teams we pass in as a parameter
         UNWIND $teams AS team_data
         
-        // Only process teams that are in our manual map
-        WITH team_data WHERE team_data.team_id IN keys($team_map)
+        WITH team_data WHERE toString(team_data.team_id) IN keys($team_map)
 
-        // Find the corresponding Region node that we already created
-        MATCH (r:Region {name: $team_map[team_data.team_id]})
+        MATCH (r:Region {name: $team_map[toString(team_data.team_id)]})
 
-        // MERGE finds a Team with this team_id or creates it if it doesn't exist
         MERGE (t:Team {team_id: team_data.team_id})
-        
-        // SET is used to add or update properties on the node
         SET
             t.name = team_data.name,
             t.tag = team_data.tag,
             t.wins = team_data.wins,
             t.losses = team_data.losses
             
-        // MERGE creates the relationship between the team and region if it doesn't already exist
         MERGE (t)-[:FROM_REGION]->(r)
         
         RETURN count(t) AS teams_processed
