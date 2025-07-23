@@ -7,12 +7,10 @@ PASSWORD = '3xRqM8a5BtXMRp-SlrheVsU0lz3sd5JPpxJJqxsjRbM'
 
 TEAM_REGION_MAP = {
     # Europe (EU)
-    '8291895': 'WEU',       # Tundra Esports
-    '2163': 'WEU',          # Liquid    
-    '8599101': 'WEU',       # Gaimin Gladiators    
-    '9498970': 'WEU',       # AVULUS    
-    '1838315': 'WEU',       # Team Secret   
-    '8291895': 'WEU',       # Tundra Esports    
+    '8291895': 'EU',       # Tundra Esports
+    '2163': 'EU',          # Liquid    
+    '8599101': 'EU',       # Gaimin Gladiators    
+    '9498970': 'EU',       # AVULUS     
 
     # Commonwealth of Independent States (CIS)
     '7119388': 'CIS',       # Team Spirit
