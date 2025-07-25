@@ -1,8 +1,8 @@
 from neo4j import GraphDatabase
 
-URI = 'neo4j+s://de9f0fd0.databases.neo4j.io'
+URI = 'neo4j+s://9fa0005b.databases.neo4j.io'
 USERNAME = 'neo4j'
-PASSWORD = '3xRqM8a5BtXMRp-SlrheVsU0lz3sd5JPpxJJqxsjRbM'
+PASSWORD = '2OGzHvL34RYo6zDxtqKxsWl6ktfkjVpvjV5_Hod-Mq8'
 
 class Region:
     def __init__(self, uri, user, password):
