@@ -1,8 +1,8 @@
 import os
 from langchain_community.graphs import Neo4jGraph
 from langchain.chains import GraphCypherQAChain
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.prompts.prompt import PromptTemplate
+from langchain_community.chat_models import ChatOllama
+from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import AgentExecutor, create_react_agent, Tool
 
@@ -12,33 +12,27 @@ PASSWORD = '2OGzHvL34RYo6zDxtqKxsWl6ktfkjVpvjV5_Hod-Mq8'
 
 
 CYPHER_GENERATION_TEMPLATE = """
-Task:Generate Cypher statement to query a graph database.
+Task: You are an expert Neo4j Cypher translator. Generate a Cypher statement to query a graph database.
 Instructions:
-Use only the provided relationship types and properties in the schema.
-Do not use any other relationship types or properties that are not provided.
+- Use only the relationship types and properties provided in the schema.
+- To filter on properties, you MUST use a `WHERE` clause.
+- **Correct syntax for filtering:** `MATCH (p:Player) WHERE p.name CONTAINS 'spirit'`
+- Do not include any explanations or apologies in your response. Only provide the Cypher query.
+
 Schema:
 {schema}
 
-Note: Do not include any explanations or apologies in your response.
-Do not respond to questions that might ask for anything else than a Cypher statement.
-Do not include any text except the generated Cypher statement.
-
-A crucial rule is to use the `CONTAINS` keyword for fuzzy matching of names in `Player`, `Team`, and `Tournament` nodes. For example, if the user asks about "Spirit", you should search for names containing "Spirit".
-
-The question is:
+The user's question is:
 {question}
 """
 CYPHER_PROMPT = PromptTemplate(
     input_variables=["schema", "question"], template=CYPHER_GENERATION_TEMPLATE
 )
 
-# --- NEW: AGENT CONVERSATIONAL PROMPT ---
-# This is the main prompt for the agent, telling it how to behave.
+# --- AGENT CONVERSATIONAL PROMPT ---
 AGENT_PROMPT_TEMPLATE = """
-You are a Dota 2 eSports expert with access to a graph database.
-You are having a conversation with a human.
-Given the following conversation history and a follow-up question,
-decide whether to use the graph database tool to answer it.
+You are a helpful Dota 2 eSports expert. You are having a conversation with a human.
+Given the conversation history and a follow-up question, use your tools to answer.
 You have access to the following tools:
 
 {tools}
@@ -62,7 +56,6 @@ Previous conversation history:
 New question: {input}
 {agent_scratchpad}
 """
-
 AGENT_PROMPT = PromptTemplate.from_template(AGENT_PROMPT_TEMPLATE)
 
 def main():
@@ -70,10 +63,9 @@ def main():
                        username=USERNAME,
                        password=PASSWORD)
     graph.refresh_schema()
-
     print(graph.schema)
 
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    llm = ChatOllama(model="llama3:8b", temperature=0)
 
     chain = GraphCypherQAChain.from_llm(
         graph=graph,

@@ -18,7 +18,7 @@ class Item:
             response = requests.get('https://api.opendota.com/api/heroes')
             response.raise_for_status()
             heroes_data = response.json()
-            print(f'got {len(heroes_data)} data')
+            print(f'got {len(heroes_data)} data')   
         except requests.exceptions.RequestException as e:
             print(e)
 
