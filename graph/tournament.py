@@ -15,7 +15,7 @@ class Tournament:
     def close(self):
         self.driver.close()
 
-    def tours(self, filename='tours_id.csv'):
+    def tours(self, filename='graph/tours_id.csv'):
         data = pd.read_csv(filename)
         ids = data['leagueid'].tolist()
         return set(ids)
