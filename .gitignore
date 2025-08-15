@@ -1,8 +1,4 @@
 /venv/
 *.csv
 /.vscode/
-/pycache/
-*.py[cod]
-*$py.class
-.ipynb_checkpoints/
 *.json
