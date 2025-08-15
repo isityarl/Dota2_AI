@@ -27,7 +27,7 @@ class Match:
                 
                 for match_id in match_ids:
                     if self.get_match_existance(session, match_id):
-                        print(f'match {match_id} already exists in db')
+                        #print(f'match {match_id} already exists in db')
                         continue
 
                     match_details = self.get_match_details(match_id)
