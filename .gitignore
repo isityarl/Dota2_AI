@@ -1,3 +1,8 @@
-venv/
+/venv/
 *.csv
-.vscode/
+/.vscode/
+/pycache/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+*.json
