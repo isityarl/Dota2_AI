@@ -74,6 +74,10 @@ graph.refresh_schema()
 
 llm = ChatOllama(model="mistral:7b", temperature=0)
 
+from langchain_huggingface import HuggingFaceEndpoint
+HF_TOKEN = os.environ.get("hugging")
+llm = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.2", token=HF_TOKEN)
+
 chain = GraphCypherQAChain.from_llm(
     graph=graph,
     llm=llm,
